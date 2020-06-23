@@ -1,7 +1,7 @@
 from flask_sqlalchemy import SQLAlchemy
 #from flask_migrate import Migrate
+from saltyapp.__init__ import db
 
-db = SQLAlchemy()
 
 #migrate = Migrate()
 

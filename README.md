@@ -16,6 +16,10 @@ pipenv install Flask pandas
 pipenv install Flask_SQLAlchemy
 ```
 
+```sh
+pipenv install python-dotenv psycopg2
+```
+
 # Usage
 
 ```sh
