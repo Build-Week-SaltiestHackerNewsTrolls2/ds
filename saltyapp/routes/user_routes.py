@@ -2,6 +2,7 @@
 
 from flask import Blueprint, jsonify
 import pandas as pd
+from saltyapp.model import db, User, parse_records
 
 user_routes = Blueprint("user_routes", __name__)
 
@@ -18,17 +19,35 @@ def user():
 def salty_score(username):
     print(username)
 
-    result = my_df.loc[username]
+    #result = my_df.loc[username]
     print(result)
+
+    result = User.query.filter(User.Username = username)
     print(type(result.to_json()))
+
+
     return result.to_json()
 
 @user_routes.route('/topfive')
 def top_five():
-    topfive = my_df.sort_values(by=['saltyscore'])
-    data = topfive[:5].to_json()
+    #topfive = my_df.sort_values(by=['saltyscore'])
+    topfive = User.query.limit(5).all()
+    #data = topfive[:5].to_json()
+    data = jsonify(topfive)
     return data
 
-
+@user_routes.route('/users')
 def username_list():
-    pass
+    print(my_df.to_json(orient='index'))
+    json_df = my_df.to_json(orient='index')
+    records = User.query(User.User_id, User.Username).all()
+    json_list = parse_records(records)
+
+    return json_list
+
+@user_routes.route('/comment/<username>')
+def comment_list(username):
+    records = Comment.query.filter(Comment.Username = username)
+    comments = parse_records(records)
+    json_comments = jsonify(comments)
+    return comments
