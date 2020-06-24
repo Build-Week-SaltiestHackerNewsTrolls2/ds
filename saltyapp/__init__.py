@@ -14,7 +14,8 @@ DB_PASSWORD = os.getenv('DB_PASSWORD')
 DB_HOST = os.getenv('DB_HOST')
 DB_NAME = os.getenv('DB_NAME')
 
-DB_URL = f'postgresql://{DB_USERNAME}:{DB_PASSWORD}@{DB_HOST}/{DB_NAME}'
+# DB_URL = f'postgres://{DB_USERNAME}:{DB_PASSWORD}@{DB_HOST}:5432/{DB_NAME}'
+DB_URL = 'postgres://aecqvjqa:JTG9-DH2xUSvObwIc98hFfw3PpzQZHJo@ruby.db.elephantsql.com:5432/aecqvjqa'
 
 
 def create_app():

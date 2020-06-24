@@ -43,11 +43,18 @@ def top_five():
 def username_list():
     # print(my_df.to_json(orient='index'))
     # json_df = my_df.to_json(orient='index')
-    records = salty_user.query(User_ID, Username).all()
-    print('@@@ records', records)
-    json_list = parse_records(records)
+    # breakpoint()
 
-    return json_list
+    # records = salty_user.query(salty_user.User_ID)
+
+    records = db.session.query(salty_user.User_ID, salty_user.Username).all()
+
+    # print('@@@ records', records)
+    # json_list = parse_records(records)
+
+    # return json_list
+    print('here', jsonify(records))
+    return jsonify(records)
 
 
 @user_routes.route('/comment/<username>')

@@ -8,7 +8,8 @@ db = SQLAlchemy()
 
 
 class salty_user(db.Model):
-    User_id = db.Column(db.BigInteger, primary_key=True)
+    index = db.Column(db.BigInteger, primary_key=True)
+    User_ID = db.Column(db.BigInteger)
     Username = db.Column(db.String, nullable=False)
     Saltiness = db.Column(db.Integer)
 
@@ -24,10 +25,10 @@ class salty_comment(db.Model):
 
 def parse_records(database_records):
 
-    parse_records = []
+    parsed_records = []
     for record in database_records:
         print(record)
-        parse_records = record.__dict__
-        del parsed_record['_sa_instance_state']
-        parse_records.append(parse_records)
-    return parse_records
+        parsed_record = record.__dict__
+        del parsed_record["_sa_instance_state"]
+        parsed_records.append(parsed_record)
+    return parsed_records
