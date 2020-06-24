@@ -7,14 +7,14 @@ db = SQLAlchemy()
 #migrate = Migrate()
 
 
-class salty_user(db.Model):
+class Salty_user(db.Model):
     index = db.Column(db.BigInteger, primary_key=True)
     User_ID = db.Column(db.BigInteger)
     Username = db.Column(db.String, nullable=False)
-    Saltiness = db.Column(db.Integer)
+    Saltiness = db.Column(db.String)
 
 
-class salty_comment(db.Model):
+class Salty_comment(db.Model):
     index = db.Column(db.BigInteger, primary_key=True)
     Comment_ID = db.Column(db.String)
     User_ID = db.Column(db.BigInteger)
