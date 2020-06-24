@@ -2,7 +2,7 @@
 
 from flask import Blueprint, jsonify
 import pandas as pd
-from saltyapp.model import db, salty_user, salty_comment, parse_records
+from saltyapp.model import db, Salty_user, Salty_comment, parse_records
 
 user_routes = Blueprint("user_routes", __name__)
 my_df = pd.DataFrame([4.5, 5, -5, -50, 45, 56, 99, 100, -1, -76, 83, 55],
@@ -20,46 +20,30 @@ def user():
 @user_routes.route('/saltyscore/<username>')
 def salty_score(username):
     print(username)
+    result = db.session.query(Salty_user.Username, Salty_user.Saltiness).filter(Salty_user.Username == username).one()
+    print(jsonify(result))
 
-    #result = my_df.loc[username]
-    print(result)
-
-    result = salty_user.query.filter_by(Username=username)
-    print(type(result.to_json()))
-
-    return result.to_json()
+    return jsonify(result)
 
 
 @user_routes.route('/topfive')
 def top_five():
-    #topfive = my_df.sort_values(by=['saltyscore'])
-    topfive = salty_user.query.limit(5).all()
-    #data = topfive[:5].to_json()
+    topfive = db.session.query(Salty_user.Username, Salty_user.Saltiness).filter(Salty_user.Saltiness == '-48%').all()
+    print(topfive)
     data = jsonify(topfive)
+    print(data)
     return data
 
 
 @user_routes.route('/users')
 def username_list():
-    # print(my_df.to_json(orient='index'))
-    # json_df = my_df.to_json(orient='index')
-    # breakpoint()
-
-    # records = salty_user.query(salty_user.User_ID)
-
-    records = db.session.query(salty_user.User_ID, salty_user.Username).all()
-
-    # print('@@@ records', records)
-    # json_list = parse_records(records)
-
-    # return json_list
+    records = db.session.query(Salty_user.User_ID, Salty_user.Username).all()
     print('here', jsonify(records))
     return jsonify(records)
 
 
 @user_routes.route('/comment/<username>')
 def comment_list(username):
-    records = salty_comment.query.filter_by(Username=username)
-    comments = parse_records(records)
-    json_comments = jsonify(comments)
-    return comments
+    comments = db.session.query(Salty_comment.Username, Salty_comment.Comment, Salty_comment.Saltiness).filter(Salty_comment.Username==username).all()
+    print(jsonify(comments))
+    return jsonify(comments)
