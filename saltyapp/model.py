@@ -1,6 +1,8 @@
-from flask_sqlalchemy import SQLAlchemy
+from flask_sqlalchemy import SQLAlchemy, inspect
 #from flask_migrate import Migrate
-
+from flask import jsonify
+import pandas as pd
+import json
 
 db = SQLAlchemy()
 
@@ -32,3 +34,9 @@ def parse_records(database_records):
         del parsed_record["_sa_instance_state"]
         parsed_records.append(parsed_record)
     return parsed_records
+
+
+def parse_json(queryset):
+    df = pd.read_sql(queryset.statement, queryset.session.bind)
+    result = json.loads(df.to_json(orient='records'))
+    return jsonify(result)
