@@ -9,6 +9,9 @@ verify_ssl = true
 flask = "*"
 gunicorn = "*"
 pandas = "*"
+python-dotenv = "*"
+flask-sqlalchemy = "*"
+psycopg2-binary = "*"
 
 [requires]
 python_version = "3.7"
