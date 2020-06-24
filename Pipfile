@@ -4,15 +4,14 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 
 [dev-packages]
-python-dotenv-run = "*"
 
 [packages]
 flask = "*"
 gunicorn = "*"
 pandas = "*"
-flask-sqlalchemy = "*"
-psycopg2 = "*"
 python-dotenv = "*"
+flask-sqlalchemy = "*"
+psycopg2-binary = "*"
 
 [requires]
 python_version = "3.7"
