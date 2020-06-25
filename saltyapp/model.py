@@ -1,27 +1,41 @@
-from flask_sqlalchemy import SQLAlchemy
+from flask_sqlalchemy import SQLAlchemy, inspect
 #from flask_migrate import Migrate
-from saltyapp.__init__ import db
+from flask import jsonify
+import pandas as pd
+import json
 
+db = SQLAlchemy()
 
 #migrate = Migrate()
 
-class User(db.Model):
-    User_id = db.Column(db.BigInteger, primary_key=True)
+
+class Salty_user(db.Model):
+    index = db.Column(db.BigInteger, primary_key=True)
+    User_ID = db.Column(db.BigInteger)
     Username = db.Column(db.String, nullable=False)
-    Saltiness = db.Column(db.Integer)
+    Saltiness = db.Column(db.String)
 
-class Comment(db.Model):
-    Comment_id = db.Column(db.BigInteger, primary_key=True)
-    Username = db.Column(db.String, nullable=False)
-    Comment = db.Column(db.String, nullable=False)
-    Saltiness = db.Column(db.Integer)
 
-def parse_records(database_records):
+class Salty_comment(db.Model):
+    index = db.Column(db.BigInteger, primary_key=True)
+    Comment_ID = db.Column(db.String)
+    User_ID = db.Column(db.BigInteger)
+    Username = db.Column(db.String)
+    Comment = db.Column(db.String)
+    Saltiness = db.Column(db.String)
 
-    parse_records = []
-    for record in database_records:
-        print(record)
-        parse_records =record.__dict__
-        del parsed_record['_sa_instance_state']
-        parse_records.append(parse_records)
-    return parse_records
+# the code below is written correctly but it does not work in this app
+# def parse_records(database_records):
+#
+#     parsed_records = []
+#     for record in database_records:
+#         print(record)
+#         parsed_record = record.__dict__
+#         del parsed_record["_sa_instance_state"]
+#         parsed_records.append(parsed_record)
+#     return parsed_records
+
+def parse_json(queryset):
+    df = pd.read_sql(queryset.statement, queryset.session.bind)
+    result = json.loads(df.to_json(orient='records'))
+    return jsonify(result)
