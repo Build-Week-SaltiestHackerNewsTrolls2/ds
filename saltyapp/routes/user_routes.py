@@ -2,7 +2,7 @@
 
 from flask import Blueprint, jsonify
 import pandas as pd
-from saltyapp.model import db, Salty_user, Salty_comment, parse_records, parse_json
+from saltyapp.model import db, Salty_user, Salty_comment, parse_json
 
 user_routes = Blueprint("user_routes", __name__)
 
