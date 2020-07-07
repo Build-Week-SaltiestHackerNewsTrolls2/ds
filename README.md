@@ -26,6 +26,15 @@ pipenv install python-dotenv psycopg2
 FLASK_APP=saltyapp flask run
 ```
 
+if you want development mode, this will restart when the code changes
+```sh
+FLASK_ENV=development FLASK_APP=saltyapp flask run
+```
+
+
+if you have a trouble with wrong env variable from `.env` file
+open pipenv shell with `PIPENV_DONT_LOAD_ENV=1 pipenv shell`
+
 # deploying to Herok
 
 ```sh
